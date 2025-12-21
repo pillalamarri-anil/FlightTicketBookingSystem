@@ -10,11 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Executable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 @Service
-public class SearchServiceImpl {
+public class SearchServiceImpl implements SearchService{
 
     private InventoryAdapter inventoryAdapter;
 
@@ -23,14 +24,14 @@ public class SearchServiceImpl {
         this.inventoryAdapter = inventoryAdapter;
     }
 
-    public Flight[] searchFlights(String sourceCityCode, String destinationCityCode, Date date)
+    public Flight[] searchFlights(String sourceCityCode, String destinationCityCode, LocalDateTime date)
             throws InvalidCityExeption, InvalidDateException, DependentServiceException {
         // validate city Code
         if (sourceCityCode == null || destinationCityCode == null
                 || sourceCityCode.length() != 3 || destinationCityCode.length() != 3)
-            throw new InvalidCityExeption("Source or Destination city code is invalie");
+            throw new InvalidCityExeption("Source or Destination city code is invalid");
 
-        if (date.before(new Date()))
+        if (date.isBefore(LocalDateTime.now()))
             throw new InvalidDateException("Date is invalid");
 
         try {

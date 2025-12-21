@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 public class AirCraft extends BaseModel {
 
+    @Column(unique = true, nullable = false)
     private String number;
     private String make;
     private String model;

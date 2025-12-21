@@ -1,6 +1,7 @@
 package dev.anil.flightticketbookingsystem.DTOs;
 
 import dev.anil.flightticketbookingsystem.models.Booking;
+import dev.anil.flightticketbookingsystem.models.enums.BookingStatus;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Setter
 public class BookingResponseDTO {
 
-    Booking booking;
+    private String number;
+    private float amount;
+    private BookingStatus bookingStatus;
     ResponseStatus status;
 }

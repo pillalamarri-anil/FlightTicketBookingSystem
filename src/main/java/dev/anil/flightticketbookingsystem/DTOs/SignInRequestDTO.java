@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 @Getter
 @Setter
 public class SignInRequestDTO {
-    private String username;
+    private String email;
     private String password;
 }

@@ -3,6 +3,10 @@ package dev.anil.flightticketbookingsystem.Configs;
 import dev.anil.flightticketbookingsystem.InventoryProvider.AmadeusAuth;
 import dev.anil.flightticketbookingsystem.InventoryProvider.AmadeusInventoryAdapter;
 import dev.anil.flightticketbookingsystem.InventoryProvider.InventoryAdapter;
+import dev.anil.flightticketbookingsystem.PriceCalculationStrategy.DynamicPricingStrategy;
+import dev.anil.flightticketbookingsystem.PriceCalculationStrategy.PriceCalculationStrategy;
+import dev.anil.flightticketbookingsystem.Services.PriceCalculationService;
+import jdk.jfr.Name;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,8 +15,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class AppConfigs {
 
     @Bean
-    InventoryAdapter getAmadeusInventoryAdapter() {
-        return new AmadeusInventoryAdapter(new AmadeusAuth());
+    AmadeusAuth createAmadeusAuth() {
+        return new AmadeusAuth();
+    }
+
+    @Bean
+    InventoryAdapter getAmadeusInventoryAdapter(AmadeusAuth amadeusAuth) {
+        return new AmadeusInventoryAdapter(amadeusAuth);
+    }
+
+    @Bean
+    PriceCalculationStrategy getPriceCalculationStrategy() {
+        return new DynamicPricingStrategy();
     }
 
     @Bean

@@ -1,5 +1,6 @@
 package dev.anil.flightticketbookingsystem.models;
 
+import dev.anil.flightticketbookingsystem.models.UserModels.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.util.List;
 @Entity
 public class Booking extends BaseModel {
 
+    @Column(nullable = false)
     private String number;
 
     @ManyToOne
@@ -23,7 +25,7 @@ public class Booking extends BaseModel {
 
     private float amount;
 
-    @OneToMany( mappedBy = "booking", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToMany( mappedBy = "booking", cascade = CascadeType.PERSIST)
     private List<Flight_Seat> flight_seats; // there can be cancellation also
 
     @Enumerated(EnumType.ORDINAL)

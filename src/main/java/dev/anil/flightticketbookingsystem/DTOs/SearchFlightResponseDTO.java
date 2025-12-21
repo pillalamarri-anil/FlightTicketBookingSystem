@@ -7,8 +7,8 @@ import java.util.List;
 
 @Getter
 @Setter
-public class BookingRequestDTO {
-    long userId;
-    long flightId;
-    List<Long> flightSeatIds;
+
+public class SearchFlightResponseDTO {
+
+    List<FlightDTO> flights;
 }

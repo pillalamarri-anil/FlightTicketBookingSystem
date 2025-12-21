@@ -7,7 +7,7 @@ import dev.anil.flightticketbookingsystem.Exceptions.UserNotFoundException;
 import dev.anil.flightticketbookingsystem.models.Booking;
 import dev.anil.flightticketbookingsystem.models.Flight;
 import dev.anil.flightticketbookingsystem.models.Flight_Seat;
-import dev.anil.flightticketbookingsystem.models.User;
+import dev.anil.flightticketbookingsystem.models.UserModels.User;
 import dev.anil.flightticketbookingsystem.models.enums.BookingStatus;
 import dev.anil.flightticketbookingsystem.models.enums.FlightSeatStatus;
 import dev.anil.flightticketbookingsystem.models.enums.PaymentStatus;
@@ -35,7 +35,8 @@ public class BookingService {
     @Autowired
     public BookingService(UserRepository userRepository, FlightRepository flightRepository,
                           Flight_SeatRepository flight_SeatRepository, BookingRepository bookingRepository,
-                          PriceCalculationService priceCalculationService, PaymentService paymentService) {
+                            PriceCalculationService priceCalculationService,
+                          PaymentService paymentService) {
         this.userRepository = userRepository;
         this.flightRepository = flightRepository;
         this.flight_SeatRepository = flight_SeatRepository;
@@ -69,6 +70,8 @@ public class BookingService {
             throw new PaymentNotCompletedException("Payment Not Completed");
 
         booking.setStatus(BookingStatus.CONFIRMED);
+        booking.setNumber("BOOKING-"+System.currentTimeMillis());
+        bookingRepository.save(booking);
         return booking;
     }
 

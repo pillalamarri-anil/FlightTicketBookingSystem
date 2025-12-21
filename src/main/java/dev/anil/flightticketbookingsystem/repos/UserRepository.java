@@ -1,6 +1,6 @@
 package dev.anil.flightticketbookingsystem.repos;
 
-import dev.anil.flightticketbookingsystem.models.User;
+import dev.anil.flightticketbookingsystem.models.UserModels.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

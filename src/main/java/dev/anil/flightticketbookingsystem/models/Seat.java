@@ -14,6 +14,7 @@ import java.util.List;
 @Entity
 public class Seat extends BaseModel {
 
+    @Column(nullable = false)
     private String seatNumber;
 
     @Enumerated(EnumType.ORDINAL)

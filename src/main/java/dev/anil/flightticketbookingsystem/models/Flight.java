@@ -4,14 +4,17 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
 @Setter
 
 @Entity
+@Table(indexes = @Index(columnList = "id"))
 public class Flight extends BaseModel {
 
+    @Column(nullable = false)
     private String flightNumber;
 
     @ManyToOne
@@ -29,9 +32,13 @@ public class Flight extends BaseModel {
     @ManyToOne
     private Operator operator;
 
-    long departureTime;
+    @Column(nullable = false)
+    LocalDateTime departureTime;
 
-    long arrivalTime;
+    @Column(nullable = false)
+    LocalDateTime arrivalTime;
 
-    long minPrice;
+    float minPrice;
+
+    String currency;
 }

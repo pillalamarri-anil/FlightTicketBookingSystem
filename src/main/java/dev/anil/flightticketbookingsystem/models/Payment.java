@@ -1,9 +1,6 @@
 package dev.anil.flightticketbookingsystem.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import dev.anil.flightticketbookingsystem.models.enums.PaymentStatus;
@@ -15,6 +12,7 @@ import dev.anil.flightticketbookingsystem.models.enums.PaymentType;
 @Entity
 public class Payment extends BaseModel{
 
+    @Column(nullable = false)
     private long paymentId;
 
     @Enumerated(EnumType.ORDINAL)

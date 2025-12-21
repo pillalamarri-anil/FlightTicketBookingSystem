@@ -1,6 +1,7 @@
 package dev.anil.flightticketbookingsystem.InventoryProvider;
 
 import dev.anil.flightticketbookingsystem.models.*;
+import dev.anil.flightticketbookingsystem.models.UserModels.User;
 import dev.anil.flightticketbookingsystem.models.enums.BookingStatus;
 import dev.anil.flightticketbookingsystem.models.enums.FlightSeatStatus;
 import tools.jackson.databind.JsonNode;
@@ -13,6 +14,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -27,7 +29,7 @@ public class AmadeusInventoryAdapter implements InventoryAdapter {
     }
 
     @Override
-    public Flight[] getFlights(City source, City destination, Date departureDate) {
+    public Flight[] getFlights(City source, City destination, LocalDateTime departureDate) {
 
         try {
             String token = authService.getAccessToken();
@@ -41,7 +43,7 @@ public class AmadeusInventoryAdapter implements InventoryAdapter {
                             "&max=50",
                     source.getCode(),
                     destination.getCode(),
-                    formatDate(departureDate)
+                    departureDate.toLocalDate().toString()
             );
 
             HttpRequest request = HttpRequest.newBuilder()
@@ -70,7 +72,8 @@ public class AmadeusInventoryAdapter implements InventoryAdapter {
 
         for (JsonNode offer : data) {
 
-            long price = offer.get("price").get("total").asLong();
+            float price = offer.get("price").get("total").asFloat();
+            String currency = offer.get("price").get("currency").asText();
 
             for (JsonNode itinerary : offer.get("itineraries")) {
                 for (JsonNode segment : itinerary.get("segments")) {
@@ -86,15 +89,9 @@ public class AmadeusInventoryAdapter implements InventoryAdapter {
                         Flight flight = new Flight();
                         flight.setFlightNumber(flightNumber);
 
-                        flight.setDepartureTime(
-                                Instant.parse(segment.get("departure").get("at").asText())
-                                        .toEpochMilli()
-                        );
+                        flight.setDepartureTime(LocalDateTime.parse(segment.get("departure").get("at").asText()));
 
-                        flight.setArrivalTime(
-                                Instant.parse(segment.get("arrival").get("at").asText())
-                                        .toEpochMilli()
-                        );
+                        flight.setArrivalTime(LocalDateTime.parse(segment.get("arrival").get("at").asText()));
 
                         City src = new City();
                         src.setCode(segment.get("departure").get("iataCode").asText());
@@ -109,6 +106,7 @@ public class AmadeusInventoryAdapter implements InventoryAdapter {
                         flight.setOperator(operator);
 
                         flight.setMinPrice(price);
+                        flight.setCurrency(currency);
                         return flight;
                     });
 
@@ -145,7 +143,7 @@ public class AmadeusInventoryAdapter implements InventoryAdapter {
                     extractFlightNumber(flight),
                     flight.getSource().getCode(),
                     flight.getDestination().getCode(),
-                    formatDate(flight.getDepartureTime())
+                    flight.getDepartureTime()
             );
 
             HttpRequest request = HttpRequest.newBuilder()

@@ -1,10 +1,8 @@
 package dev.anil.flightticketbookingsystem.DTOs;
 
-import dev.anil.flightticketbookingsystem.models.User;
+import dev.anil.flightticketbookingsystem.models.UserModels.User;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter

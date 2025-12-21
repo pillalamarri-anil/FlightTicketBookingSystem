@@ -5,9 +5,8 @@ import dev.anil.flightticketbookingsystem.DTOs.SignUpRequestDTO;
 import dev.anil.flightticketbookingsystem.DTOs.UserDTO;
 import dev.anil.flightticketbookingsystem.Exceptions.InvalidCredentialsException;
 import dev.anil.flightticketbookingsystem.Exceptions.UserAlreadyExistsExeption;
-import dev.anil.flightticketbookingsystem.Exceptions.UserNotFoundException;
 import dev.anil.flightticketbookingsystem.Services.UserService;
-import dev.anil.flightticketbookingsystem.models.User;
+import dev.anil.flightticketbookingsystem.models.UserModels.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +28,6 @@ public class UserController {
 
     @PostMapping("/signin")
     public String signIn(@RequestBody SignInRequestDTO requestDTO) throws InvalidCredentialsException {
-        return userService.signIn(requestDTO.getUsername(), requestDTO.getPassword());
+        return userService.signIn(requestDTO.getEmail(), requestDTO.getPassword());
     }
 }

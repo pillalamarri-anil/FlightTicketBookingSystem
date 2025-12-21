@@ -1,14 +1,15 @@
 package dev.anil.flightticketbookingsystem.InventoryProvider;
 
 import dev.anil.flightticketbookingsystem.models.*;
+import dev.anil.flightticketbookingsystem.models.UserModels.User;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class SabreInventoryAdapter implements InventoryAdapter{
 
     @Override
-    public Flight[] getFlights(City source, City destination, Date departureDate) {
+    public Flight[] getFlights(City source, City destination, LocalDateTime departureDate) {
         return new Flight[0];
     }
 
