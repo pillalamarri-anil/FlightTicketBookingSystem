@@ -3,7 +3,7 @@ package dev.anil.flightticketbookingsystem.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import dev.anil.flightticketbookingsystem.models.enums.FlightStatus;
+import dev.anil.flightticketbookingsystem.models.enums.AirCraftStatus;
 
 import java.util.List;
 
@@ -26,5 +26,5 @@ public class AirCraft extends BaseModel {
     private List<Seat> seatList;
 
     @Enumerated(EnumType.ORDINAL)
-    private FlightStatus isGrounded;
+    private AirCraftStatus status;
 }
